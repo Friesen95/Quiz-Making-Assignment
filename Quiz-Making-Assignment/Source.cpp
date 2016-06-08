@@ -87,8 +87,9 @@ int main(){
 	- call this function after the start quiz, have in the parameter test score and avg score 
 	give feedback on how the person did
 
-	3rd function 
+	write function 
 	- when we write back to the file we can clear the file and write the new 2D array to it
+	-
 		
 
 */
