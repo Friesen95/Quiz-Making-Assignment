@@ -11,14 +11,52 @@ using namespace std;
 
 	
 int main(){
+
+	//Do while loop on "writing" = true
+
+		//Fill the quiz vector arrays
+
+		//Get the person's name
+
+		//Search the list for the name to see if they've taken the quiz before
+
+		//IF they took the test before, print high score
+		//ELSE welcome them
+		//Save "takenBefore" as boolean
+
+		//BONUS - get average (don't print message yet)
+
+		//Start the quiz
+
+		//"mark" the quiz
+
+		//Calculate score AS PERCENT
+
+		//Output score as percent
+
+		//BONUS - compare percent to avg percent
+
+		//check "takenBefore"
+		//IF true check old high score
+			//IF new score = higher, overwrite
+			//ELSE leave it be
+		//ELSE create new score
+
+	//Prompt user to write again or quit
+
+	//IF write again, writing = true (runs quiz loop again)
+	//ELSE writing = false (leaves loop)
 	
 }
 
-/*  GetInfo 
+/*  
+
+	GetInfo 
 	- Go through txt file and writes all lines into a 2D vector
 	- use function for both QuizTakers.txt QuizQuestion.txt
 	- From that step only work with that array 
 	- QuizQuestion vector = [[q1, a1, B1, c1, d1], [q2,2,b2,c2,D2], ...]
+	- Quiztakers vector = [[lastName, firstName, grade], ...]
 
 	StartQuiz 
 	- sends first nested vector to a method called Find answer
