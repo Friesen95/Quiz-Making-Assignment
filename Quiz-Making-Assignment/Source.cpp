@@ -11,7 +11,8 @@ using namespace std;
 
 	
 int main(){
-	bool TakeTest = true;
+	bool takeTest = true;
+	vector<string> quizTakers;
 	//Do while loop on "writing" = true
 	do {
 
@@ -64,13 +65,13 @@ int main(){
 }
 
 /*  
-
 	GetInfo (Alex)
 	- Go through txt file and writes all lines into a 2D vector
 	- use function for both QuizTakers.txt QuizQuestion.txt
 	- From that step only work with that array 
 	- QuizQuestion vector = [[q1, a1, B1, c1, d1], [q2,2,b2,c2,D2], ...]
 	- Quiztakers vector = [[lastName, firstName, grade], ...]
+
 	StartQuiz (Alex)
 	- sends first nested vector to a method called Find answer
 	- stores the answer in a varible
@@ -105,7 +106,6 @@ int main(){
 
 	writeTestAgain(String userInput) (Emma)
 	- IF userInput is Y return true
-
 	- else return false
 
 */
