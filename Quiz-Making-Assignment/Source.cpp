@@ -14,7 +14,8 @@ int main(){
 	
 }
 
-/* 1st Function - Go through txt file and writes all lines into a 2D vector
+/*  GetInfo 
+	- Go through txt file and writes all lines into a 2D vector
 	- use function for both QuizTakers.txt QuizQuestion.txt
 	- From that step only work with that array 
 	- QuizQuestion vector = [[q1, a1, B1, c1, d1], [q2,2,b2,c2,D2], ...]
@@ -26,7 +27,6 @@ int main(){
 	- give them the option to pick answer 1,2,3, or 4 
 	- if they pick correct then add 1 tothe score if not then continue for loop
 	- at the end of loop return final score
-
 
 	Find Answer
 	- go through the vector 
@@ -48,9 +48,6 @@ int main(){
 			you did better than the avg.
 	- call this function after the start quiz, have in the parameter test score and avg score 
 	give feedback on how the person did
-
-	2nd function 
-	- sort the 2D vector
 
 	3rd function 
 	- when we write back to the file we can clear the file and write the new 2D array to it
