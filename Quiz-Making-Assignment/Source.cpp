@@ -11,8 +11,10 @@ using namespace std;
 
 	
 int main(){
-
+	bool TakeTest = true;
 	//Do while loop on "writing" = true
+	do {
+
 
 		//Fill the quiz vector arrays
 
@@ -44,21 +46,32 @@ int main(){
 
 	//Prompt user to write again or quit
 
+	
+
 	//IF write again, writing = true (runs quiz loop again)
 	//ELSE writing = false (leaves loop)
+		/*if (writeTestAgain(userInput))
+		{
+			TakeTest = true;
+		}
+		else
+		{
+			TakeTest = false;
+		}
+		*/
+	} while (TakeTest);
 	
 }
 
 /*  
 
-	GetInfo 
+	GetInfo (Alex)
 	- Go through txt file and writes all lines into a 2D vector
 	- use function for both QuizTakers.txt QuizQuestion.txt
 	- From that step only work with that array 
 	- QuizQuestion vector = [[q1, a1, B1, c1, d1], [q2,2,b2,c2,D2], ...]
 	- Quiztakers vector = [[lastName, firstName, grade], ...]
-
-	StartQuiz 
+	StartQuiz (Alex)
 	- sends first nested vector to a method called Find answer
 	- stores the answer in a varible
 	- Goes through array and starts to post the question and possible answers in all lower case 
@@ -66,14 +79,14 @@ int main(){
 	- if they pick correct then add 1 tothe score if not then continue for loop
 	- at the end of loop return final score
 
-	Find Answer
+	Find Answer (Alex)
 	- go through the vector 
 	- send back the number of the correct answer.
 
-	Average Finder
+	Average Finder (Emma)
 	- have a function that  goes through the array and finds the average
 
-	Feedback function
+	Feedback function (Emma)
 	- have a function that is called feedback that will post to the screen based on how 
 	you did vs. the average 
 			-> Higher than average & higher than 80 = You did very well and higher then average
@@ -87,10 +100,13 @@ int main(){
 	- call this function after the start quiz, have in the parameter test score and avg score 
 	give feedback on how the person did
 
-	write function 
+	write function (Emma)
 	- when we write back to the file we can clear the file and write the new 2D array to it
-	-
-		
+
+	writeTestAgain(String userInput) (Emma)
+	- IF userInput is Y return true
+
+	- else return false
 
 */
 
@@ -105,17 +121,6 @@ string search(string firstName, string lastName) {
 This function will write what ever was put in the parameter to a file
 */
 bool writing(string firstName,string lastName,int grade) {
-	if (grade > 100)
-	{
-		cout << "Grade is to high";
-		return false;
-	}
-	else if (grade < 0)
-	{
-		cout << "Grade is too low";
-		return false;
-	}
-	else {
 	string wordsToWrite = "";
 	ofstream outputFile;
 	outputFile.open("quiztakers.txt");
@@ -127,5 +132,4 @@ bool writing(string firstName,string lastName,int grade) {
 	outputFile << grade << endl;
 	outputFile.close();
 	return true;
-	}
 }
