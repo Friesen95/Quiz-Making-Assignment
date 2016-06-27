@@ -118,6 +118,10 @@
   <ItemGroup>
     <ResourceCompile Include="Quiz-Making-Assignment.rc" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="quiz.txt" />
+    <Text Include="names.txt" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

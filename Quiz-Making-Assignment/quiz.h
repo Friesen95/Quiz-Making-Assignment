@@ -5,7 +5,8 @@
 #include <fstream>
 
 
-/*	GetInfo (Alex)
+/*	
+	GetInfo (Alex)
 	- Go through txt file and writes all lines into a 2D vector
 	- use function for both QuizTakers.txt QuizQuestion.txt
 	- From that step only work with that array 
@@ -16,56 +17,63 @@ using namespace std;
 
 vector< vector<string> > getInfo(string txtFileName, string typeOfTxt)
 {
+	cout << "In getInfo";
 	vector< vector<string> > textFile;
 	string line;
 	size_t pos = 0;
 	string delimiter = ",";
 	fstream dataFile(txtFileName, ios::in);
-	if (dataFile)
-	{
-			if (typeOfTxt == "quiz")
+	cout << "Has data file";
+	if (dataFile.is_open()) {
+		if (typeOfTxt == "quiz")
+		{
+			cout << "quiz file";
+			vector <string> questionToAdd;
+			getline(dataFile, line);
+			while (dataFile) // GETTING STUCK IN THIS LOOP
 			{
-				vector <string> questionToAdd;
-				getline(dataFile, line);
-				while (dataFile)
+				//while looking for the next delimiter, if we found one and it doesnt equal NULL
+				while ((pos = line.find(delimiter)) != std::string::npos)
 				{
-					//while looking for the next delimiter, if we found one and it doesnt equal NULL
-					while ((pos = line.find(delimiter)) != std::string::npos)
-					{ 
-						//insert the substring to the end of the vector
-						questionToAdd.insert(questionToAdd.end(),line.substr(0, pos));
-						//get rid of the substring so we can get the next one
-						line.erase(0, pos + delimiter.length());
-					}
-					// add the line that is now a vector into a 
-					textFile.insert(textFile.end(),questionToAdd);
+					//insert the substring to the end of the vector
+					questionToAdd.insert(questionToAdd.end(), line.substr(0, pos));
+					//get rid of the substring so we can get the next one
+					line.erase(0, pos + delimiter.length());
 				}
+				// add the line that is now a vector into a 
+				textFile.insert(textFile.end(), questionToAdd);
 			}
-			else if (typeOfTxt == "quizTakers")
+		}
+		else if (typeOfTxt == "quizTakers")
+		{
+			vector <string> personToAdd;
+			while (dataFile)
 			{
-				vector <string> personToAdd;
-				while (dataFile)
+
+				//while looking for the next delimiter, if we found one and it doesnt equal NULL
+				while ((pos = line.find(delimiter)) != std::string::npos)
 				{
-
-					//while looking for the next delimiter, if we found one and it doesnt equal NULL
-					while ((pos = line.find(delimiter)) != std::string::npos)
-					{
-						//insert the substring to the end of the vector
-						personToAdd.insert(personToAdd.end(), line.substr(0, pos));
-						//get rid of the substring so we can get the next one
-						line.erase(0, pos + delimiter.length());
-					}
-					// add the line that is now a vector into a 
-					textFile.insert(textFile.end(), personToAdd);
-
+					//insert the substring to the end of the vector
+					personToAdd.insert(personToAdd.end(), line.substr(0, pos));
+					//get rid of the substring so we can get the next one
+					line.erase(0, pos + delimiter.length());
 				}
+				// add the line that is now a vector into a 
+				textFile.insert(textFile.end(), personToAdd);
+
 			}
-			else
-			{
-				cout << "The right type was not selected" << endl;
-			}
-		
+		}
+		else
+		{
+			cout << "The right type was not selected" << endl;
+		}
 	}
+	else 
+	{
+		cout << "The file was not found!";
+	}
+		
+
 	return textFile;
 }
 
@@ -123,9 +131,6 @@ void counter(int choice, vector< vector<string> > questions){
 	write function (Emma)
 	- when we write back to the file we can clear the file and write the new 2D array to it
 
-	writeTestAgain(String userInput) (Emma)
-	- IF userInput is Y return true
-	- else return false
 
 */
 
@@ -144,4 +149,23 @@ bool writing(string firstName,string lastName,int grade) {
 	outputFile << grade << endl;
 	outputFile.close();
 	return true;
+}
+
+/*
+* writeTestAgain(String userInput) (Emma)
+* -IF userInput is Y return true
+* -else return false
+*/
+bool writeTestAgain(string retakeTest) {
+	bool takeTest;
+	if (retakeTest == "y")
+	{
+		takeTest = true;
+		return takeTest;
+	}
+	else
+	{
+		takeTest = false;
+		return takeTest;
+	}
 }
