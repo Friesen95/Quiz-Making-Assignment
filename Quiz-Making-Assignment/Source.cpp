@@ -61,6 +61,6 @@ int main(){
 			TakeTest = false;
 		}
 		*/
-	} while (TakeTest);
+	} while (takeTest);
 	
 }

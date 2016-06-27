@@ -1,12 +1,75 @@
+#include <vector>
+#include <string>
+#include <cstring>
+#include <iostream>
+#include <fstream>
 
-/*  
-	GetInfo (Alex)
+
+/*	GetInfo (Alex)
 	- Go through txt file and writes all lines into a 2D vector
 	- use function for both QuizTakers.txt QuizQuestion.txt
 	- From that step only work with that array 
 	- QuizQuestion vector = [[q1, a1, B1, c1, d1], [q2,2,b2,c2,D2], ...]
-	- Quiztakers vector = [[lastName, firstName, grade], ...]
+	- QuizTakers vector = [[lastName, firstName, grade], ...]
+*/
+using namespace std;
 
+vector< vector<string> > getInfo(string txtFileName, string typeOfTxt)
+{
+	vector< vector<string> > textFile;
+	string line;
+	size_t pos = 0;
+	string delimiter = ",";
+	fstream dataFile(txtFileName, ios::in);
+	if (dataFile)
+	{
+			if (typeOfTxt == "quiz")
+			{
+				vector <string> questionToAdd;
+				getline(dataFile, line);
+				while (dataFile)
+				{
+					//while looking for the next delimiter, if we found one and it doesnt equal NULL
+					while ((pos = line.find(delimiter)) != std::string::npos)
+					{ 
+						//insert the substring to the end of the vector
+						questionToAdd.insert(questionToAdd.end(),line.substr(0, pos));
+						//get rid of the substring so we can get the next one
+						line.erase(0, pos + delimiter.length());
+					}
+					// add the line that is now a vector into a 
+					textFile.insert(textFile.end(),questionToAdd);
+				}
+			}
+			else if (typeOfTxt == "quizTakers")
+			{
+				vector <string> personToAdd;
+				while (dataFile)
+				{
+
+					//while looking for the next delimiter, if we found one and it doesnt equal NULL
+					while ((pos = line.find(delimiter)) != std::string::npos)
+					{
+						//insert the substring to the end of the vector
+						personToAdd.insert(personToAdd.end(), line.substr(0, pos));
+						//get rid of the substring so we can get the next one
+						line.erase(0, pos + delimiter.length());
+					}
+					// add the line that is now a vector into a 
+					textFile.insert(textFile.end(), personToAdd);
+
+				}
+			}
+			else
+			{
+				cout << "The right type was not selected" << endl;
+			}
+		
+	}
+	return textFile;
+}
+
+/*
 	StartQuiz (Alex)
 	- sends first nested vector to a method called Find answer
 	- stores the answer in a varible
@@ -44,13 +107,6 @@
 	- else return false
 
 */
-
-
-string search(string firstName, string lastName) {
-	vector<string> testTakers;
-	/*
-	*/
-}
 
 /*
 This function will write what ever was put in the parameter to a file
