@@ -77,10 +77,31 @@ vector< vector<string> > getInfo(string txtFileName, string typeOfTxt)
 	- give them the option to pick answer 1,2,3, or 4 
 	- if they pick correct then add 1 tothe score if not then continue for loop
 	- at the end of loop return final score
+*/
+void startQuiz() {
 
+}
+
+/*
 	Find Answer (Alex)
 	- go through the vector 
 	- send back the number of the correct answer.
+	*/
+vector<int> answer(vector< vector<string> > questions) {
+	vector<int> answers;
+
+	return answers;
+}
+
+/*counts the amount of questions we got right
+and returns the amount
+*/
+void counter(int choice, vector< vector<string> > questions){
+	//calls answer and sees if we got it right
+	answer(questions);
+}
+
+/*
 
 	Average Finder (Emma)
 	- have a function that  goes through the array and finds the average
