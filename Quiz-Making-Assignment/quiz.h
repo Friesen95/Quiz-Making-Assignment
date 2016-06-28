@@ -26,7 +26,6 @@ vector< vector<string> > getInfo(string txtFileName, string typeOfTxt)
 		if (typeOfTxt == "quiz")
 		{
 			vector<string> questionToAdd;
-			
 			while (getline(dataFile, line))
 			{
 				//while looking for the next delimiter, if we found one and it doesnt equal NULL
@@ -40,14 +39,12 @@ vector< vector<string> > getInfo(string txtFileName, string typeOfTxt)
 				// add the line that is now a vector into a 
 				textFile.insert(textFile.end(), questionToAdd);
 			}
-
 		}
 		else if (typeOfTxt == "quizTakers")
 		{
 			vector <string> personToAdd;
 			while (getline(dataFile, line))
 			{
-
 				//while looking for the next delimiter, if we found one and it doesnt equal NULL
 				while ((pos = line.find(delimiter)) != std::string::npos)
 				{
@@ -58,7 +55,6 @@ vector< vector<string> > getInfo(string txtFileName, string typeOfTxt)
 				}
 				// add the line that is now a vector into a 
 				textFile.insert(textFile.end(), personToAdd);
-
 			}
 		}
 		else
@@ -70,8 +66,6 @@ vector< vector<string> > getInfo(string txtFileName, string typeOfTxt)
 	{
 		cout << "The file was not found!";
 	}
-		
-
 	return textFile;
 }
 
@@ -87,7 +81,7 @@ vector< vector<string> > getInfo(string txtFileName, string typeOfTxt)
 int startQuiz(vector<vector<string>> quiz) {
 	int score;
 	vector<vector<string>> quiz;
-	vector <string> answers = answer(quiz);
+	vector <char> answers = answer(quiz);
 	string toPrintLower = "";
 	string toPrint = "";
 		for (int q = 0; q < quiz.size(); q++) {
@@ -135,15 +129,6 @@ vector<char> answer(vector< vector<string> > questions) {
 
 	return answers;
 }
-
-/*counts the amount of questions we got right
-and returns the amount
-*/
-void counter(int choice, vector< vector<string> > questions){
-	//calls answer and sees if we got it right
-	answer(questions);
-}
-
 /*
 
 	Average Finder (Emma)
@@ -165,12 +150,10 @@ void counter(int choice, vector< vector<string> > questions){
 
 	write function (Emma)
 	- when we write back to the file we can clear the file and write the new 2D array to it
-
-
 */
 
 /*
-This function will write what ever was put in the parameter to a file
+This function will write whatever was put in the parameter to a file
 */
 bool writing(string firstName,string lastName,int grade) {
 	string wordsToWrite = "";
