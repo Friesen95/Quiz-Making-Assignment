@@ -109,14 +109,14 @@ int startQuiz(vector<vector<string>> quiz) {
 	- go through the vector 
 	- send back the number of the correct answer.
 	*/
-vector<char> answer(vector< vector<string> > questions) {
+vector<char> answer(vector<vector<string>> questions) {
 	vector<char> answers;
 	char delimeter = ')';
 	string temp;
 	// go through the 2D vector
-	for (int x = 0; x < questions.size; x++)
+	for (int x = 0; x < questions.size(); x++)
 	{
-		for (int y = 0; y < questions[x].size; y++)
+		for (int y = 0; y < questions[x].size(); y++)
 		{
 			// find ")" and see if the letter before it is a capital if yes add it to the answers vector
 			temp = questions[x][y];
@@ -192,10 +192,18 @@ bool writeTestAgain(string retakeTest) {
 * answersToLower
 * Function to display answers all in lower case
 */
-string answersToLower(string s)
+string toLowerCase(string s)
 {
 	for (int i = 0; i < s.size(); i++)
 		if (s[i] >= 'A' && s[i] <= 'Z')
 			s[i] = tolower(s[i]);
+	return s;
+}
+
+string toUpperCase(string s)
+{
+	for (int i = 0; i < s.size(); i++)
+		if (s[i] >= 'a' && s[i] <= 'z')
+			s[i] = toupper(s[i]);
 	return s;
 }
