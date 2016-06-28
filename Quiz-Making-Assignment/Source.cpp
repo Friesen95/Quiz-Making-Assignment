@@ -40,21 +40,7 @@ int main(){
 		//Start the quiz
 
 		//Prints the quiz questions and prints the answers all lower case (still upper in file for correct answer)
-		for (int q = 0; q < quiz.size(); q++) {
-			for (int a = 0; a < quiz[q].size(); a++) {
-				if (a == 0) {
-					cout << quiz[q][a];
-				}
-				else {
-					toPrintLower = quiz[q][a];
-					toPrint = answersToLower(toPrintLower);
-					cout << toPrint;
-				}
-				cout << "\n";
-			}
-			cout << "Please enter your answer as the letter you believe is correct.\n";
-			// Right after this line get an input/answer from the user to the question 
-		}
+		startQuiz(quiz);
 
 
 		//"mark" the quiz

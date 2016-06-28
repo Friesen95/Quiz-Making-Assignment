@@ -76,7 +76,7 @@ vector< vector<string> > getInfo(string txtFileName, string typeOfTxt)
 }
 
 /*
-	StartQuiz (Alex)
+	StartQuiz (Alex and Emma)
 	- sends first nested vector to a method called Find answer
 	- stores the answer in a varible
 	- Goes through array and starts to post the question and possible answers in all lower case 
@@ -84,8 +84,30 @@ vector< vector<string> > getInfo(string txtFileName, string typeOfTxt)
 	- if they pick correct then add 1 tothe score if not then continue for loop
 	- at the end of loop return final score
 */
-void startQuiz() {
+int startQuiz(vector<vector<string>> quiz) {
+	int score;
+	vector<vector<string>> quiz;
+	vector <string> answers = answer(quiz);
+	string toPrintLower = "";
+	string toPrint = "";
+		for (int q = 0; q < quiz.size(); q++) {
+			for (int a = 0; a < quiz[q].size(); a++) {
+				if (a == 0) {
+					cout << quiz[q][a];
+				}
+				else {
+					toPrintLower = quiz[q][a];
+					toPrint = answersToLower(toPrintLower);
+					cout << toPrint;
+				}
+				cout << "\n";
+			}
+			cout << "Please enter your answer as the letter you believe is correct.\n";
+			// Right after this line get an input/answer from the user to the question 
 
+			// if what they chose == to the answer than add one point
+		}
+		return score; 
 }
 
 /*
@@ -93,8 +115,24 @@ void startQuiz() {
 	- go through the vector 
 	- send back the number of the correct answer.
 	*/
-vector<int> answer(vector< vector<string> > questions) {
-	vector<int> answers;
+vector<string> answer(vector< vector<string> > questions) {
+	vector<string> answers;
+	string delimeter = ")";
+	string temp;
+	// go through the 2D vector
+	for (int x = 0; x < questions.size; x++)
+	{
+		for (int y = 0; y < questions[x].size; y++)
+		{
+			// find ")" and see if the letter before it is a capital if yes add it to the answers vector
+			temp = questions[x][y];
+			if (isalpha(temp))
+			{
+
+			}
+
+		}
+	}
 
 	return answers;
 }
