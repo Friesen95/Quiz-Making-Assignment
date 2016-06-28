@@ -36,15 +36,32 @@ vector< vector<string> > getInfo(string txtFileName, string typeOfTxt)
 			while (getline(dataFile, line))
 			{
 				//while looking for the next delimiter, if we found one and it doesnt equal NULL
+				int x1 = 0;
 				while ((pos = line.find(delimiter)) != std::string::npos)
 				{
 					//insert the substring to the end of the vector
+					
 					questionToAdd.insert(questionToAdd.end(), line.substr(0, pos));
 					//get rid of the substring so we can get the next one
+					
+					// trouble shooting --
+					//cout << line.substr(0, pos) << endl;
+					//cout << x1 << endl;
+					//x1++;
+					//-----------------------
 					line.erase(0, pos + delimiter.length());
+					
 				}
-				// add the line that is now a vector into a 
+				//cout << "End Of nested while loop" << endl << endl;
+				
 				textFile.insert(textFile.end(), questionToAdd);
+				// clear the questionToAdd vector because if we dont it gets added multiple times 
+				questionToAdd.clear();
+				/*for (int x =0; x < questionToAdd.size(); x++)
+				{
+				cout << questionToAdd[x] << endl;
+				}
+				// add the line that is now a vector into a */
 			}
 		}
 		else if (typeOfTxt == "quizTakers")
@@ -62,6 +79,8 @@ vector< vector<string> > getInfo(string txtFileName, string typeOfTxt)
 				}
 				// add the line that is now a vector into a 
 				textFile.insert(textFile.end(), personToAdd);
+				// clear the second vector so that we dont add the same person multiple times
+				personToAdd.clear();
 			}
 		}
 		else
@@ -73,6 +92,23 @@ vector< vector<string> > getInfo(string txtFileName, string typeOfTxt)
 	{
 		cout << "The file was not found!";
 	}
+
+//	for (int q = 0; q < textFile.size(); q++) {
+		//trouble shoot
+		//cout << "----------Question is going to be printed -----------" << endl;
+	//	for (int a = 0; a < textFile[q].size(); a++) {
+			/*if (a == 0) {
+			cout << quiz[q][a];
+			}
+			else { */
+			
+//			cout << textFile[q][a] << endl;
+
+			//}
+	//		cout << "\n";
+	//	}
+//	}
+
 	return textFile;
 }
 
@@ -93,17 +129,20 @@ int startQuiz(vector<vector<string>> quiz) {
 	string toPrintLower = "";
 	string toPrint = "";
 	for (int q = 0; q < quiz.size(); q++) {
+		//trouble shoot
+		//cout << "----------Question is going to be printed -----------" << endl;
 		for (int a = 0; a < quiz[q].size(); a++) {
 			if (a == 0) {
-				cout << quiz[q][a];
+				cout << quiz[q][a] << endl;
 			}
 			else {
-				toPrintLower = quiz[q][a];
+			toPrintLower = quiz[q][a];
 				toPrint = toLowerCase(toPrintLower);
-				cout << toPrint;
+				cout << toPrint << endl;	
 			}
-			cout << "\n";
 		}
+		//troubleshoot
+		//cout << "***********Question was just printed*********" << endl;
 		cout << "Please enter your answer as the letter you believe is correct.\n";
 		// Right after this line get an input/answer from the user to the question 
 		getline(cin, choice);
@@ -123,6 +162,7 @@ int startQuiz(vector<vector<string>> quiz) {
 	}
 
 	for (int x = 0; x < answers.size(); x++) {
+		cout << "Answers: " << endl;
 		cout << answers[x] << "\n";
 	}
 

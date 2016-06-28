@@ -13,7 +13,7 @@ using namespace std;
 
 	
 int main(){
-	cout << "Welcome to the quiz!";
+	cout << "Welcome to the quiz!" << endl;
 	bool takeTest = true;
 	string retakeTest = "n";
 
