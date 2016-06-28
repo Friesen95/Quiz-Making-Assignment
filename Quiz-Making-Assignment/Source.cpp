@@ -8,7 +8,7 @@
 using namespace std;
 
 /*
-*Main Function that will be running al the methods for the quiz
+*Main Function that will be running all the methods for the quiz
 */
 
 	
@@ -53,6 +53,7 @@ int main(){
 				cout << "\n";
 			}
 			cout << "Please enter your answer as the letter you believe is correct.\n";
+			// Right after this line get an input/answer from the user to the question 
 		}
 
 
