@@ -17,20 +17,17 @@ using namespace std;
 
 vector< vector<string> > getInfo(string txtFileName, string typeOfTxt)
 {
-	cout << "In getInfo";
 	vector< vector<string> > textFile;
 	string line;
 	size_t pos = 0;
 	string delimiter = ",";
 	fstream dataFile(txtFileName, ios::in);
-	cout << "Has data file";
 	if (dataFile.is_open()) {
 		if (typeOfTxt == "quiz")
 		{
-			cout << "quiz file";
-			vector <string> questionToAdd;
-			getline(dataFile, line);
-			while (dataFile) // GETTING STUCK IN THIS LOOP
+			vector<string> questionToAdd;
+			
+			while (getline(dataFile, line))
 			{
 				//while looking for the next delimiter, if we found one and it doesnt equal NULL
 				while ((pos = line.find(delimiter)) != std::string::npos)
@@ -43,11 +40,12 @@ vector< vector<string> > getInfo(string txtFileName, string typeOfTxt)
 				// add the line that is now a vector into a 
 				textFile.insert(textFile.end(), questionToAdd);
 			}
+
 		}
 		else if (typeOfTxt == "quizTakers")
 		{
 			vector <string> personToAdd;
-			while (dataFile)
+			while (getline(dataFile, line))
 			{
 
 				//while looking for the next delimiter, if we found one and it doesnt equal NULL
@@ -168,4 +166,16 @@ bool writeTestAgain(string retakeTest) {
 		takeTest = false;
 		return takeTest;
 	}
+}
+
+/*
+* answersToLower
+* Function to display answers all in lower case
+*/
+string answersToLower(string s)
+{
+	for (int i = 0; i < s.size(); i++)
+		if (s[i] >= 'A' && s[i] <= 'Z')
+			s[i] = tolower(s[i]);
+	return s;
 }

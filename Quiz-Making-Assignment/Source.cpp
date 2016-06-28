@@ -16,6 +16,8 @@ int main(){
 	cout << "Welcome to the quiz!";
 	bool takeTest = true;
 	string retakeTest = "n";
+	string toPrintLower = "";
+	string toPrint = "";
 	vector<vector<string>> quizTakers;
 	vector<vector<string>> quiz;
 	//Do while loop on "takeTest" = true
@@ -25,11 +27,6 @@ int main(){
 		//Fill the info of those who have taken the quiz
 		quizTakers = getInfo("names.txt", "quizTakers");
 
-		for (int q = 0; q < quiz.size(); q++ ) {
-			for (int a = 0; a < quiz[q].size(); a++) {
-				cout << quiz[q][a];
-			}
-		}
 		//Get the person's name
 
 		//Search the list for the name to see if they've taken the quiz before
@@ -41,6 +38,23 @@ int main(){
 		//BONUS - get average (don't print message yet)
 
 		//Start the quiz
+
+		//Prints the quiz questions and prints the answers all lower case (still upper in file for correct answer)
+		for (int q = 0; q < quiz.size(); q++) {
+			for (int a = 0; a < quiz[q].size(); a++) {
+				if (a == 0) {
+					cout << quiz[q][a];
+				}
+				else {
+					toPrintLower = quiz[q][a];
+					toPrint = answersToLower(toPrintLower);
+					cout << toPrint;
+				}
+				cout << "\n";
+			}
+			cout << "Please enter your answer as the letter you believe is correct.\n";
+		}
+
 
 		//"mark" the quiz
 
@@ -70,7 +84,7 @@ int main(){
 	
 	} while (takeTest);
 	
-	cout << "\nThanks for taking the quiz!\nGoodbye!";
+	cout << "\nThanks for taking the quiz!\nGoodbye!\n";
 
 	system("PAUSE");
 	return 0;
