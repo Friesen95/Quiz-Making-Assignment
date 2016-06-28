@@ -115,9 +115,9 @@ int startQuiz(vector<vector<string>> quiz) {
 	- go through the vector 
 	- send back the number of the correct answer.
 	*/
-vector<string> answer(vector< vector<string> > questions) {
-	vector<string> answers;
-	string delimeter = ")";
+vector<char> answer(vector< vector<string> > questions) {
+	vector<char> answers;
+	char delimeter = ')';
 	string temp;
 	// go through the 2D vector
 	for (int x = 0; x < questions.size; x++)
@@ -126,11 +126,10 @@ vector<string> answer(vector< vector<string> > questions) {
 		{
 			// find ")" and see if the letter before it is a capital if yes add it to the answers vector
 			temp = questions[x][y];
-			if (isalpha(temp))
+			if (isalpha(temp[1]) && isupper(temp[1]) && temp[2] == delimeter)
 			{
-
+				answers.insert(answers.end(), temp[1]);
 			}
-
 		}
 	}
 
