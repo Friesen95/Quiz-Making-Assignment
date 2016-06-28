@@ -14,6 +14,13 @@
 	- QuizTakers vector = [[lastName, firstName, grade], ...]
 */
 using namespace std;
+vector<char> answer(vector<vector<string>> questions);
+vector< vector<string> > getInfo(string txtFileName, string typeOfTxt);
+int startQuiz(vector<vector<string>> quiz);
+bool writing(string firstName, string lastName, int grade);
+bool writeTestAgain(string retakeTest);
+string toLowerCase(string s);
+string toUpperCase(string s);
 
 vector< vector<string> > getInfo(string txtFileName, string typeOfTxt)
 {
@@ -82,8 +89,7 @@ int startQuiz(vector<vector<string>> quiz) {
 	int score = 0;
 	string choice;
 	char choiceChar;
-	vector<char> answers;
-	answers = answer(quiz);
+	vector<char> answers = answer(quiz);
 	string toPrintLower = "";
 	string toPrint = "";
 	for (int q = 0; q < quiz.size(); q++) {
