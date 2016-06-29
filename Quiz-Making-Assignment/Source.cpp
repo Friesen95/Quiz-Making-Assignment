@@ -16,6 +16,9 @@ int main(){
 	cout << "Welcome to the quiz!" << endl;
 	bool takeTest = true;
 	string retakeTest = "n";
+	float averageScore = 0;
+	int score = 0;
+	float userScore;
 
 	vector<vector<string>> quizTakers;
 	vector<vector<string>> quiz;
@@ -26,6 +29,12 @@ int main(){
 		//Fill the info of those who have taken the quiz
 		quizTakers = getInfo("names.txt", "quizTakers");
 
+		for (int i = 0; i < quizTakers.size(); i++) {
+			for (int x = 0; x < quizTakers[i].size(); x++) {
+				cout << quizTakers[i][x];
+			}
+		}
+
 		//Get the person's name
 
 		//Search the list for the name to see if they've taken the quiz before
@@ -35,8 +44,8 @@ int main(){
 		//Save "takenBefore" as boolean
 
 		//BONUS - get average (don't print message yet)
-
-
+		averageScore = getAverage(quizTakers);
+		cout << "\nAvgScore" << averageScore << endl;
 		/*
 		StartQuiz (Alex and Emma)
 		- sends first nested vector to a method called Find answer
@@ -46,16 +55,22 @@ int main(){
 		- if they pick correct then add 1 to the score if not then continue for loop
 		- at the end of loop return final score
 		*/
-		startQuiz(quiz);
 
-
-		//"mark" the quiz
 
 		//Calculate score AS PERCENT
+		score = startQuiz(quiz);
+
+		cout << "\nScore:" << score;
+
+		userScore = ((float)(score) / quiz.size()) * 100;
 
 		//Output score as percent
 
+		cout << "\nuserScore" << userScore;
+
 		//BONUS - compare percent to avg percent
+
+		getFeedback(averageScore, userScore);
 
 		//check "takenBefore"
 		//IF true check old high score

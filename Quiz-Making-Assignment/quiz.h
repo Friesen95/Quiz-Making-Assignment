@@ -4,15 +4,7 @@
 #include <iostream>
 #include <fstream>
 
-
-/*	
-	GetInfo (Alex)
-	- Go through txt file and writes all lines into a 2D vector
-	- use function for both QuizTakers.txt QuizQuestion.txt
-	- From that step only work with that array 
-	- QuizQuestion vector = [[q1, a1, B1, c1, d1], [q2,2,b2,c2,D2], ...]
-	- QuizTakers vector = [[lastName, firstName, grade], ...]
-*/
+//Global declarations
 using namespace std;
 vector<char> answer(vector<vector<string>> questions);
 vector< vector<string> > getInfo(string txtFileName, string typeOfTxt);
@@ -22,6 +14,14 @@ bool writeTestAgain(string retakeTest);
 string toLowerCase(string s);
 string toUpperCase(string s);
 
+/*
+GetInfo (Alex)
+- Go through txt file and writes all lines into a 2D vector
+- use function for both QuizTakers.txt QuizQuestion.txt
+- From that step only work with that array
+- QuizQuestion vector = [[q1, a1, B1, c1, d1], [q2,2,b2,c2,D2], ...]
+- QuizTakers vector = [[lastName, firstName, grade], ...]
+*/
 vector< vector<string> > getInfo(string txtFileName, string typeOfTxt)
 {
 	vector< vector<string> > textFile;
@@ -129,6 +129,7 @@ int startQuiz(vector<vector<string>> quiz) {
 	string toPrintLower = "";
 	string toPrint = "";
 	for (int q = 0; q < quiz.size(); q++) {
+		cout << "\n";
 		//trouble shoot
 		//cout << "----------Question is going to be printed -----------" << endl;
 		for (int a = 0; a < quiz[q].size(); a++) {
@@ -143,14 +144,14 @@ int startQuiz(vector<vector<string>> quiz) {
 		}
 		//troubleshoot
 		//cout << "***********Question was just printed*********" << endl;
-		cout << "Please enter your answer as the letter you believe is correct.\n";
+		cout << "\nPlease enter your answer as the letter you believe is correct.\n";
 		// Right after this line get an input/answer from the user to the question 
 		getline(cin, choice);
 		choice = toUpperCase(choice);
 		//Prompt for valid choice until given
 		while (choice != "A" && choice != "B" && choice != "C" && choice != "D") {
-			cout << "Please enter a, b, c, or d.";
-			cout << "Please enter your answer as the letter you believe is correct.\n";
+			cout << "\nPlease enter a, b, c, or d.";
+			cout << "\nPlease enter your answer as the letter you believe is correct.\n";
 			getline(cin, choice);
 			choice = toUpperCase(choice);
 		}
@@ -197,23 +198,6 @@ vector<char> answer(vector<vector<string>> questions) {
 }
 /*
 
-	Average Finder (Emma)
-	- have a function that  goes through the array and finds the average
-
-	Feedback function (Emma)
-	- have a function that is called feedback that will post to the screen based on how 
-	you did vs. the average 
-			-> Higher than average & higher than 80 = You did very well and higher then average
-			-> higher than 80 = you did very well but not better then average
-			-> higher than 50 = you passed but did not get higher then average
-			-> higher then average and higher than 50 = you passed and are higher then the average 
-			but you can do better 
-			-> lower than 50 = you failed please try again 
-			-> lower than 50 and higher than avg = you failed, however this test wasnt easy because 
-			you did better than the avg.
-	- call this function after the start quiz, have in the parameter test score and avg score 
-	give feedback on how the person did
-
 	write function (Emma)
 	- when we write back to the file we can clear the file and write the new 2D array to it
 */
@@ -253,9 +237,67 @@ bool writeTestAgain(string retakeTest) {
 		return takeTest;
 	}
 }
+/*
+* Average Finder(Emma)
+* A function that returns the average score of the quiz (calculated before the user took the quiz)
+*/
+float getAverage(vector<vector<string>> quizTakers) {
+	int totalScore = 0;
+	int scoreToAdd;
+	for (int i = 0; i < quizTakers.size(); i++) {
+		scoreToAdd = stoi(quizTakers[i][2]);
+		totalScore = totalScore + scoreToAdd;
+	}
+	float avg = (float)(totalScore) / quizTakers.size();
+	return avg;
+}
 
 /*
-* answersToLower
+
+Feedback function (Emma)
+- have a function that is called feedback that will post to the screen based on how
+you did vs. the average
+-> Higher than average & higher than 80 = You did very well and higher then average
+-> higher than 80 = you did very well but not better then average
+-> higher than 50 = you passed but did not get higher then average
+-> higher then average and higher than 50 = you passed and are higher then the average
+but you can do better
+-> lower than 50 = you failed please try again
+-> lower than 50 and higher than avg = you failed, however this test wasnt easy because
+you did better than the avg.
+- call this function after the start quiz, have in the parameter test score and avg score
+give feedback on how the person did
+*/
+
+void getFeedback(float avg, float userScore) {
+	if (userScore > 80) {
+		if (userScore > avg) {
+			cout << "\nYou did very well & scored higher than the average score of " << avg << endl;
+		}
+		else {
+			cout << "\nYou did very well, even though you did not score higher the average score of " << avg << endl;
+		}
+	}
+	else if (userScore > 50) {
+		if (userScore > avg) {
+			cout << "\nYou passed & scored higher than the average score of " << avg << " but try for a higher score next time!" << endl;
+		}
+		else {
+			cout << "\nYou passed, even thought you didn't score higher than the average score of " << avg << ". Try to get a higher score AND beat the average next time!" << endl;
+		}
+	}
+	else {
+		if (userScore > avg) {
+			cout << "\nYou failed, despite scoring higher than the average score of " << avg << "... Maybe you oughta' give this another shot." << endl;
+		}
+		else {
+			cout << "\nYou failed to pass both the test, and the average score of " << avg << "... Perhaps you should give this another go." << endl;
+		}
+	}
+}
+
+/*
+* toLowerCase
 * Function to display answers all in lower case
 */
 string toLowerCase(string s)
@@ -266,6 +308,10 @@ string toLowerCase(string s)
 	return s;
 }
 
+/*
+* toUpperCase
+* Function to display answers all in upper case
+*/
 string toUpperCase(string s)
 {
 	for (int i = 0; i < s.size(); i++)
