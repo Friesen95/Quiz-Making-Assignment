@@ -1,4 +1,6 @@
-Hilborn, Emma, 80,
 Friesen, Alex, 80,
+Hilborn, Amy, 75.000000,
+Hilborn, Emma,100.000000,
+Hilborn, Megan, 100.000000,
 Nanase, Haruka, 76,
 Shoyo, Hinata, 64,

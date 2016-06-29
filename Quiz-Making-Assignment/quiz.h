@@ -3,19 +3,20 @@
 #include <cstring>
 #include <iostream>
 #include <fstream>
+#include <algorithm>
 
 //Global declarations
 using namespace std;
 vector<char> answer(vector<vector<string>> questions);
 vector< vector<string> > getInfo(string txtFileName, string typeOfTxt);
 int startQuiz(vector<vector<string>> quiz);
-bool writing(string firstName, string lastName, int grade);
 bool writeTestAgain(string retakeTest);
 string toLowerCase(string s);
 string toUpperCase(string s);
+string trimSpaces(string s);
 
 /*
-GetInfo (Alex)
+GetInfo
 - Go through txt file and writes all lines into a 2D vector
 - use function for both QuizTakers.txt QuizQuestion.txt
 - From that step only work with that array
@@ -112,8 +113,112 @@ vector< vector<string> > getInfo(string txtFileName, string typeOfTxt)
 	return textFile;
 }
 
+bool notNewUser(string firstName, string lastName, vector<vector<string>> quizTakers) {
+	firstName = toLowerCase(firstName);
+	firstName = trimSpaces(firstName);
+	lastName = toLowerCase(lastName);
+	lastName = trimSpaces(lastName);
+	bool match = false;
+
+	string lastNameToCompare, firstNameToCompare;
+
+	for (int i = 0; i < quizTakers.size(); i++) {
+		cout << "row:" << i << endl;
+		lastNameToCompare = toLowerCase(quizTakers[i][0]);
+		lastNameToCompare = trimSpaces(lastNameToCompare);
+		if(lastNameToCompare == lastName) {
+			firstNameToCompare = toLowerCase(quizTakers[i][1]);
+			firstNameToCompare = trimSpaces(firstNameToCompare);
+			if(firstNameToCompare == firstName) {
+				match = true;
+				i = quizTakers.size();
+			}
+		}
+	}
+
+	return match;
+}
+
+float getOldScore(string firstName, string lastName, vector<vector<string>> quizTakers) {
+	firstName = toLowerCase(firstName);
+	firstName = trimSpaces(firstName);
+	lastName = toLowerCase(lastName);
+	lastName = trimSpaces(lastName);
+	string lastNameToCompare, firstNameToCompare;
+	string scoreString;
+
+	for (int i = 0; i < quizTakers.size(); i++) {
+		lastNameToCompare = toLowerCase(quizTakers[i][0]);
+		lastNameToCompare = trimSpaces(lastNameToCompare);
+		if (lastNameToCompare == lastName) {
+			firstNameToCompare = toLowerCase(quizTakers[i][1]);
+			firstNameToCompare = trimSpaces(firstNameToCompare);
+			if (firstNameToCompare == firstName) {
+				scoreString =quizTakers[i][2];
+				return stof(scoreString);
+			}
+		}
+	}
+}
+
+vector<vector<string>> addPerson(string firstName, string lastName, float score, vector<vector<string>> quizTakers) {
+	string userScore = to_string(score);
+	string newPerson = lastName + ", " + firstName + ", " + userScore + ",";
+	string delimiter = ",";
+
+	size_t pos = 0;
+	vector <string> personToAdd;
+		//while looking for the next delimiter, if we found one and it doesnt equal NULL
+		while ((pos = newPerson.find(delimiter)) != std::string::npos)
+		{
+			//insert the substring to the end of the vector
+			personToAdd.insert(personToAdd.end(), newPerson.substr(0, pos));
+			//get rid of the substring so we can get the next one
+			newPerson.erase(0, pos + delimiter.length());
+		}
+		// add the line that is now a vector into a 
+		quizTakers.insert(quizTakers.end(), personToAdd);
+
+		return quizTakers;
+}
+
+vector<vector<string>> updateScore(string firstName, string lastName, float newScore, vector<vector<string>> quizTakers) {
+	firstName = toLowerCase(firstName);
+	firstName = trimSpaces(firstName);
+	lastName = toLowerCase(lastName);
+	lastName = trimSpaces(lastName);
+	string lastNameToCompare, firstNameToCompare;
+	string scoreString;
+	float oldScore;
+	string newScoreString;
+
+	for (int i = 0; i < quizTakers.size(); i++) {
+		lastNameToCompare = toLowerCase(quizTakers[i][0]);
+		lastNameToCompare = trimSpaces(lastNameToCompare);
+		if (lastNameToCompare == lastName) {
+			firstNameToCompare = toLowerCase(quizTakers[i][1]);
+			firstNameToCompare = trimSpaces(firstNameToCompare);
+			if (firstNameToCompare == firstName) {
+				scoreString =quizTakers[i][2];
+				oldScore = stof(scoreString);
+				if (newScore > oldScore) {
+					newScoreString = " " + to_string(newScore);
+					quizTakers[i][2] = newScoreString;
+				}
+			}
+		}
+	}
+
+	return quizTakers;
+}
+
+vector<vector<string>> sortNames(vector<vector<string>> nameList) {
+	sort(nameList.begin(), nameList.end());
+	return(nameList);
+}
+
 /*
-	StartQuiz (Alex and Emma)
+	StartQuiz
 	- sends first nested vector to a method called Find answer
 	- stores the answer in a variable
 	- Goes through array and starts to post the question and possible answers in all lower case 
@@ -161,18 +266,11 @@ int startQuiz(vector<vector<string>> quiz) {
 			score++;
 		}
 	}
-
-	for (int x = 0; x < answers.size(); x++) {
-		cout << "Answers: " << endl;
-		cout << answers[x] << "\n";
-	}
-
-	cout << score;
 		return score; 
 }
 
 /*
-	Find Answer (Alex)
+	Find Answer
 	- go through the vector 
 	- send back the number of the correct answer.
 	*/
@@ -196,31 +294,22 @@ vector<char> answer(vector<vector<string>> questions) {
 
 	return answers;
 }
-/*
-
-	write function (Emma)
-	- when we write back to the file we can clear the file and write the new 2D array to it
-*/
 
 /*
-This function will write whatever was put in the parameter to a file
+* updateNamesFile
+- when we write back to the file we can clear the file and write the new, sorted vector to it
 */
-bool writing(string firstName,string lastName,int grade) {
-	string wordsToWrite = "";
+void updateNamesFile(vector<vector<string>> quizTakers) {
 	ofstream outputFile;
-	outputFile.open("quiztakers.txt");
-	cout << "Writing to the file" << endl;
-	wordsToWrite = lastName +","+ firstName + ",";
-	/* before we write to the file we need to know where to write because it needs to be sorted in the
-	text file */
-	outputFile << wordsToWrite;
-	outputFile << grade << endl;
+	outputFile.open("names.txt");
+	for (int i = 0; i < quizTakers.size(); i++) {
+		outputFile << quizTakers[i][0] << "," << quizTakers[i][1] << "," << quizTakers[i][2] << "," << endl;
+	}
 	outputFile.close();
-	return true;
 }
 
 /*
-* writeTestAgain(String userInput) (Emma)
+* writeTestAgain(String userInput)
 * -IF userInput is Y return true
 * -else return false
 */
@@ -238,7 +327,7 @@ bool writeTestAgain(string retakeTest) {
 	}
 }
 /*
-* Average Finder(Emma)
+* Average Finder
 * A function that returns the average score of the quiz (calculated before the user took the quiz)
 */
 float getAverage(vector<vector<string>> quizTakers) {
@@ -254,7 +343,7 @@ float getAverage(vector<vector<string>> quizTakers) {
 
 /*
 
-Feedback function (Emma)
+Feedback function
 - have a function that is called feedback that will post to the screen based on how
 you did vs. the average
 -> Higher than average & higher than 80 = You did very well and higher then average
@@ -270,6 +359,7 @@ give feedback on how the person did
 */
 
 void getFeedback(float avg, float userScore) {
+	cout << "You scored " << userScore << "!" << endl;
 	if (userScore > 80) {
 		if (userScore > avg) {
 			cout << "\nYou did very well & scored higher than the average score of " << avg << endl;
@@ -317,5 +407,15 @@ string toUpperCase(string s)
 	for (int i = 0; i < s.size(); i++)
 		if (s[i] >= 'a' && s[i] <= 'z')
 			s[i] = toupper(s[i]);
+	return s;
+}
+
+/*
+* trimSpaces
+* Function to trim excess spaces off front of string for name comparisons
+*/
+string trimSpaces(string s) {
+	size_t pos = s.find_first_not_of(" ");
+	s = s.substr(pos);
 	return s;
 }
