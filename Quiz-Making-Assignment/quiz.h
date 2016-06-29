@@ -18,14 +18,14 @@ string trimSpaces(string s);
 /*
 GetInfo
 - Go through txt file and writes all lines into a 2D vector
-- use function for both QuizTakers.txt QuizQuestion.txt
-- From that step only work with that array
-- QuizQuestion vector = [[q1, a1, B1, c1, d1], [q2,2,b2,c2,D2], ...]
+- use function for both names.txt and quiz.txt
+- From that step only work with that vector
+- QuizQuestion vector = [[q1, a1, B1, c1, d1], [q2, a2, b2, c2, D2], ...]
 - QuizTakers vector = [[lastName, firstName, grade], ...]
 */
-vector< vector<string> > getInfo(string txtFileName, string typeOfTxt)
+vector<vector<string>> getInfo(string txtFileName, string typeOfTxt)
 {
-	vector< vector<string> > textFile;
+	vector<vector<string>> textFile;
 	string line;
 	size_t pos = 0;
 	string delimiter = ",";
@@ -40,29 +40,15 @@ vector< vector<string> > getInfo(string txtFileName, string typeOfTxt)
 				int x1 = 0;
 				while ((pos = line.find(delimiter)) != std::string::npos)
 				{
-					//insert the substring to the end of the vector
-					
+					//insert the substring to the end of the vector					
 					questionToAdd.insert(questionToAdd.end(), line.substr(0, pos));
 					//get rid of the substring so we can get the next one
-					
-					// trouble shooting --
-					//cout << line.substr(0, pos) << endl;
-					//cout << x1 << endl;
-					//x1++;
-					//-----------------------
 					line.erase(0, pos + delimiter.length());
 					
 				}
-				//cout << "End Of nested while loop" << endl << endl;
-				
 				textFile.insert(textFile.end(), questionToAdd);
-				// clear the questionToAdd vector because if we dont it gets added multiple times 
+				// clear the questionToAdd vector because if we don't it gets added multiple times 
 				questionToAdd.clear();
-				/*for (int x =0; x < questionToAdd.size(); x++)
-				{
-				cout << questionToAdd[x] << endl;
-				}
-				// add the line that is now a vector into a */
 			}
 		}
 		else if (typeOfTxt == "quizTakers")
@@ -84,35 +70,24 @@ vector< vector<string> > getInfo(string txtFileName, string typeOfTxt)
 				personToAdd.clear();
 			}
 		}
-		else
+		else //In case code is altered, let user know that they didn't give a valid file type
 		{
 			cout << "The right type was not selected" << endl;
 		}
 	}
-	else 
+	else //In case code is altered, let user know that the file they tried to open was not found
 	{
 		cout << "The file was not found!";
 	}
 
-//	for (int q = 0; q < textFile.size(); q++) {
-		//trouble shoot
-		//cout << "----------Question is going to be printed -----------" << endl;
-	//	for (int a = 0; a < textFile[q].size(); a++) {
-			/*if (a == 0) {
-			cout << quiz[q][a];
-			}
-			else { */
-			
-//			cout << textFile[q][a] << endl;
-
-			//}
-	//		cout << "\n";
-	//	}
-//	}
-
+	//Return the vector
 	return textFile;
 }
 
+/*
+* notNewUser
+* Checks to see if the user is a new user or not, returning true or false
+*/
 bool notNewUser(string firstName, string lastName, vector<vector<string>> quizTakers) {
 	firstName = toLowerCase(firstName);
 	firstName = trimSpaces(firstName);
@@ -122,6 +97,8 @@ bool notNewUser(string firstName, string lastName, vector<vector<string>> quizTa
 
 	string lastNameToCompare, firstNameToCompare;
 
+	//Check all entries based on last name and first name, if a match is found,
+	//set match to true and increase i to jump out of loop
 	for (int i = 0; i < quizTakers.size(); i++) {
 		cout << "row:" << i << endl;
 		lastNameToCompare = toLowerCase(quizTakers[i][0]);
@@ -139,6 +116,10 @@ bool notNewUser(string firstName, string lastName, vector<vector<string>> quizTa
 	return match;
 }
 
+/*
+* getOldScore
+* Finds the user and returns their old score
+*/
 float getOldScore(string firstName, string lastName, vector<vector<string>> quizTakers) {
 	firstName = toLowerCase(firstName);
 	firstName = trimSpaces(firstName);
@@ -146,7 +127,8 @@ float getOldScore(string firstName, string lastName, vector<vector<string>> quiz
 	lastName = trimSpaces(lastName);
 	string lastNameToCompare, firstNameToCompare;
 	string scoreString;
-
+	
+	//Loops through until it finds a match in the list, then returns the score from that person
 	for (int i = 0; i < quizTakers.size(); i++) {
 		lastNameToCompare = toLowerCase(quizTakers[i][0]);
 		lastNameToCompare = trimSpaces(lastNameToCompare);
@@ -161,6 +143,10 @@ float getOldScore(string firstName, string lastName, vector<vector<string>> quiz
 	}
 }
 
+/*
+* addPerson
+* Adds a new person to the vector of people who have taken the quiz
+*/
 vector<vector<string>> addPerson(string firstName, string lastName, float score, vector<vector<string>> quizTakers) {
 	string userScore = to_string(score);
 	string newPerson = lastName + ", " + firstName + ", " + userScore + ",";
@@ -182,6 +168,10 @@ vector<vector<string>> addPerson(string firstName, string lastName, float score,
 		return quizTakers;
 }
 
+/*
+* updateScore
+* Updates the user's score, if it's better than their previous high score
+*/
 vector<vector<string>> updateScore(string firstName, string lastName, float newScore, vector<vector<string>> quizTakers) {
 	firstName = toLowerCase(firstName);
 	firstName = trimSpaces(firstName);
@@ -191,7 +181,7 @@ vector<vector<string>> updateScore(string firstName, string lastName, float newS
 	string scoreString;
 	float oldScore;
 	string newScoreString;
-
+	//Searches vector until a match is found
 	for (int i = 0; i < quizTakers.size(); i++) {
 		lastNameToCompare = toLowerCase(quizTakers[i][0]);
 		lastNameToCompare = trimSpaces(lastNameToCompare);
@@ -201,6 +191,7 @@ vector<vector<string>> updateScore(string firstName, string lastName, float newS
 			if (firstNameToCompare == firstName) {
 				scoreString =quizTakers[i][2];
 				oldScore = stof(scoreString);
+				//Comperes the old and new score, updating if the new one is better
 				if (newScore > oldScore) {
 					newScoreString = " " + to_string(newScore);
 					quizTakers[i][2] = newScoreString;
@@ -212,6 +203,10 @@ vector<vector<string>> updateScore(string firstName, string lastName, float newS
 	return quizTakers;
 }
 
+/*
+* sortNames
+* Sorts the names in the vector alphabetically
+*/
 vector<vector<string>> sortNames(vector<vector<string>> nameList) {
 	sort(nameList.begin(), nameList.end());
 	return(nameList);
@@ -235,8 +230,6 @@ int startQuiz(vector<vector<string>> quiz) {
 	string toPrint = "";
 	for (int q = 0; q < quiz.size(); q++) {
 		cout << "\n";
-		//trouble shoot
-		//cout << "----------Question is going to be printed -----------" << endl;
 		for (int a = 0; a < quiz[q].size(); a++) {
 			if (a == 0) {
 				cout << quiz[q][a] << endl;
@@ -247,8 +240,6 @@ int startQuiz(vector<vector<string>> quiz) {
 				cout << toPrint << endl;	
 			}
 		}
-		//troubleshoot
-		//cout << "***********Question was just printed*********" << endl;
 		cout << "\nPlease enter your answer as the letter you believe is correct.\n";
 		// Right after this line get an input/answer from the user to the question 
 		getline(cin, choice);
@@ -270,10 +261,10 @@ int startQuiz(vector<vector<string>> quiz) {
 }
 
 /*
-	Find Answer
-	- go through the vector 
-	- send back the number of the correct answer.
-	*/
+Find Answer
+- go through the vector 
+- send back the number of the correct answer.
+*/
 vector<char> answer(vector<vector<string>> questions) {
 	vector<char> answers;
 	char delimeter = ')';
@@ -297,7 +288,7 @@ vector<char> answer(vector<vector<string>> questions) {
 
 /*
 * updateNamesFile
-- when we write back to the file we can clear the file and write the new, sorted vector to it
+- Clear the text file and write the new, updated information into it
 */
 void updateNamesFile(vector<vector<string>> quizTakers) {
 	ofstream outputFile;
@@ -337,7 +328,7 @@ float getAverage(vector<vector<string>> quizTakers) {
 		scoreToAdd = stoi(quizTakers[i][2]);
 		totalScore = totalScore + scoreToAdd;
 	}
-	float avg = (float)(totalScore) / quizTakers.size();
+	float avg = round((float)(totalScore) / quizTakers.size());
 	return avg;
 }
 

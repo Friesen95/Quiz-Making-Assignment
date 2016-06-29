@@ -13,6 +13,7 @@ using namespace std;
 
 	
 int main(){
+	//Declare all variables
 	bool takeTest = true;
 	string retakeTest = "n";
 	float averageScore = 0;
@@ -22,12 +23,12 @@ int main(){
 	vector<string> newPerson;
 	bool takenBefore;
 	float oldScore;
-
 	vector<vector<string>> quizTakers;
 	vector<vector<string>> quiz;
+
 	//Do while loop on "takeTest" = true
 	do {
-		cout << "Welcome to the quiz!" << endl;
+		cout << "Welcome to the quiz on the history of computers!" << endl;
 		//Fill the quiz vector arrays
 		quiz = getInfo("quiz.txt", "quiz");
 		//Fill the info of those who have taken the quiz
@@ -56,8 +57,9 @@ int main(){
 
 		//Calculate score with quiz
 		score = startQuiz(quiz);
+
 		//Update score into percent
-		userScore = ((float)(score) / quiz.size()) * 100;
+		userScore = round(((float)(score) / quiz.size()) * 100);
 
 		//If the user HASN'T taken the quiz before, add them as a new entry
 		if (takenBefore == false) {
@@ -77,20 +79,21 @@ int main(){
 
 		//Prompt user to write again or quit, prompting until you get valid input, then send that to the writeTestAgain function and exit or restart quiz based on input
 		cout << "\nWould you like to take the quiz again?\nEnter y for yes or n to quit." << endl;
-
 		getline(cin, retakeTest);
 
+		//Keep prompting user until valid input is given
 		while (retakeTest != "y" && retakeTest != "n") {
 			cout << "\nPlease enter y or n only!\nWould you like to take the quiz again?\nEnter y for yes or n to quit." << endl;
 			getline(cin, retakeTest);
 		}
-
+		//Set takeTest equal to the user's choice based on y = true or n = false
 		takeTest = writeTestAgain(retakeTest);
 	
 	} while (takeTest);
 	
+	//Bid the user farewell
 	cout << "\nThanks for taking the quiz!\nGoodbye!\n";
-
+	//Wait for user to press any key to exit
 	system("PAUSE");
 	return 0;
 	
