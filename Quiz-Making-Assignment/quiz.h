@@ -36,19 +36,13 @@ vector<vector<string>> getInfo(string txtFileName, string typeOfTxt)
 			vector<string> questionToAdd;
 			while (getline(dataFile, line))
 			{
-				//while looking for the next delimiter, if we found one and it doesnt equal NULL
 				int x1 = 0;
 				while ((pos = line.find(delimiter)) != std::string::npos)
-				{
-					//insert the substring to the end of the vector					
+				{		
 					questionToAdd.insert(questionToAdd.end(), line.substr(0, pos));
-					//get rid of the substring so we can get the next one
 					line.erase(0, pos + delimiter.length());
-					
+	
 				}
-				textFile.insert(textFile.end(), questionToAdd);
-				// clear the questionToAdd vector because if we don't it gets added multiple times 
-				questionToAdd.clear();
 			}
 		}
 		else if (typeOfTxt == "quizTakers")
